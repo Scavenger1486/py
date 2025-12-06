@@ -1,6 +1,5 @@
 import streamlit as st
 import math
-import matplotlib.pyplot as plt
 import base64
 import os
 
