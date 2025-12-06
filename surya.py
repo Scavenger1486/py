@@ -1,5 +1,6 @@
 import streamlit as st
 import math
+import matplotlib.pyplot as plt
 import base64
 import os
 
@@ -12,64 +13,68 @@ st.set_page_config(page_title="Kalkulator PLTS", layout="wide")
 #   FUNGSI BACKGROUND IMAGE & STYLE
 # ============================
 def set_background(image_file):
-    with open(image_file, "rb") as f:
-        data = base64.b64encode(f.read()).decode()
-    
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/png;base64,{data}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-        section[data-testid="stSidebar"] {{
-            background-color: rgba(255, 255, 255, 0.85) !important;
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(255,255,255,0.5);
-        }}
-        section[data-testid="stSidebar"] * {{
-            color: #000000 !important;
-            text-shadow: none !important;
-        }}
-
-        /* INPUT FIELD STYLE */
-        section[data-testid="stSidebar"] div[data-baseweb="input"],
-        section[data-testid="stSidebar"] div[data-baseweb="base-input"],
-        section[data-testid="stSidebar"] div[data-baseweb="select"] > div {{
-            background-color: #ffffff !important;
-            border: 1px solid #cccccc !important;
-            color: #000000 !important;
-        }}
-        section[data-testid="stSidebar"] div[data-baseweb="input"] > div {{
-            background-color: #ffffff !important;
-            color: #000000 !important;
-        }}
-        section[data-testid="stSidebar"] button {{
-             background-color: #ffffff !important;
-             color: #000000 !important;
-             border-color: #cccccc !important;
-        }}
-        section[data-testid="stSidebar"] svg {{
-            fill: #000000 !important;
-            stroke: #000000 !important;
-        }}
-
-        /* DROPDOWN MENU STYLE */
-        div[data-baseweb="popover"] {{ background-color: #ffffff !important; border: 1px solid #ccc !important; }}
-        ul[data-baseweb="menu"] {{ background-color: #ffffff !important; color: #000000 !important; }}
-        li[role="option"] {{ color: #000000 !important; background-color: #ffffff !important; }}
-        li[role="option"]:hover, li[role="option"][aria-selected="true"] {{ background-color: #f0f0f0 !important; color: #000000 !important; }}
+    try:
+        with open(image_file, "rb") as f:
+            data = base64.b64encode(f.read()).decode()
         
-        header {{ background: transparent !important; }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: url("data:image/png;base64,{data}");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }}
+            section[data-testid="stSidebar"] {{
+                background-color: rgba(255, 255, 255, 0.85) !important;
+                backdrop-filter: blur(10px);
+                border-right: 1px solid rgba(255,255,255,0.5);
+            }}
+            section[data-testid="stSidebar"] * {{
+                color: #000000 !important;
+                text-shadow: none !important;
+            }}
+
+            /* INPUT FIELD STYLE */
+            section[data-testid="stSidebar"] div[data-baseweb="input"],
+            section[data-testid="stSidebar"] div[data-baseweb="base-input"],
+            section[data-testid="stSidebar"] div[data-baseweb="select"] > div {{
+                background-color: #ffffff !important;
+                border: 1px solid #cccccc !important;
+                color: #000000 !important;
+            }}
+            section[data-testid="stSidebar"] div[data-baseweb="input"] > div {{
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }}
+            section[data-testid="stSidebar"] button {{
+                 background-color: #ffffff !important;
+                 color: #000000 !important;
+                 border-color: #cccccc !important;
+            }}
+            section[data-testid="stSidebar"] svg {{
+                fill: #000000 !important;
+                stroke: #000000 !important;
+            }}
+
+            /* DROPDOWN MENU STYLE */
+            div[data-baseweb="popover"] {{ background-color: #ffffff !important; border: 1px solid #ccc !important; }}
+            ul[data-baseweb="menu"] {{ background-color: #ffffff !important; color: #000000 !important; }}
+            li[role="option"] {{ color: #000000 !important; background-color: #ffffff !important; }}
+            li[role="option"]:hover, li[role="option"][aria-selected="true"] {{ background-color: #f0f0f0 !important; color: #000000 !important; }}
+            
+            header {{ background: transparent !important; }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    except FileNotFoundError:
+        st.warning(f"File gambar '{image_file}' tidak ditemukan. Background default digunakan.")
 
 # --- LOAD GAMBAR ---
+# Pastikan nama file ini SAMA PERSIS dengan file yang diupload ke GitHub
 nama_file_gambar = "110473958_p0.jpg" 
 
 if os.path.exists(nama_file_gambar):
